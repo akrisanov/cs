@@ -7,16 +7,24 @@ type slice []int
 // bubbleSort sorts a slice in place by swapping elements.
 // Largest element always bubbles to the top.
 func (s *slice) bubbleSort() {
-	for i := 0; i < len(*s)-1; i++ {
-		fmt.Printf("\nIteration #%d\n", i+1)
+	swapped := true
+	iterations := 1
 
-		for j := 0; j < len(*s)-1; j++ {
+	for swapped {
+		swapped = false
+
+		fmt.Printf("\nIteration #%d\n", iterations)
+
+		for i := 0; i < len(*s)-1; i++ {
 			fmt.Printf("%v -> ", s)
-			if (*s)[j] > (*s)[j+1] {
-				(*s)[j], (*s)[j+1] = (*s)[j+1], (*s)[j]
+			if (*s)[i] > (*s)[i+1] {
+				(*s)[i], (*s)[i+1] = (*s)[i+1], (*s)[i]
+				swapped = true
 			}
 			fmt.Printf("%v\n", s)
 		}
+
+		iterations++
 	}
 }
 
