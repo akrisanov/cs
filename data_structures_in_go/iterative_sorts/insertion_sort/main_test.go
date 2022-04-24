@@ -5,40 +5,29 @@ import (
 	"testing"
 )
 
-func TestBubbleSort(t *testing.T) {
-	list := &slice{5, 1, 4, 2, 8}
-	sorted := &slice{1, 2, 4, 5, 8}
-	list.bubbleSort()
+func TestInsertionSort(t *testing.T) {
+	list := &slice{5, 2, 4, 3, 1}
+	sorted := &slice{1, 2, 3, 4, 5}
+	list.insertionSort(false)
 
 	if !reflect.DeepEqual(list, sorted) {
 		t.Errorf("got %v, wanted %v", list, sorted)
 	}
 }
 
-func TestBubbleSortMore(t *testing.T) {
+func TestInsertionSortMore(t *testing.T) {
 	list := &slice{10, 5, 3, 8, 2, 6, 4, 7, 9, 1}
 	sorted := &slice{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
-	list.bubbleSort()
+	list.insertionSort(false)
 
 	if !reflect.DeepEqual(list, sorted) {
 		t.Errorf("got %v, wanted %v", list, sorted)
 	}
 }
-
-func TestBubbleSortSliceSortedSlice(t *testing.T) {
-	list := &slice{6, 7, 8, 9, 10}
-	sorted := &slice{6, 7, 8, 9, 10}
-	list.bubbleSort()
-
-	if !reflect.DeepEqual(list, sorted) {
-		t.Errorf("got %v, wanted %v", list, sorted)
-	}
-}
-
 func TestBubbleSortSliceWithOneElement(t *testing.T) {
 	list := &slice{2}
 	sorted := &slice{2}
-	list.bubbleSort()
+	list.insertionSort(false)
 
 	if !reflect.DeepEqual(list, sorted) {
 		t.Errorf("got %v, wanted %v", list, sorted)
@@ -48,7 +37,7 @@ func TestBubbleSortSliceWithOneElement(t *testing.T) {
 func TestBubbleSortEmptySlice(t *testing.T) {
 	list := &slice{}
 	sorted := &slice{}
-	list.bubbleSort()
+	list.insertionSort(false)
 
 	if !reflect.DeepEqual(list, sorted) {
 		t.Errorf("got %v, wanted %v", list, sorted)
