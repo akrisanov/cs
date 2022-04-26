@@ -5,29 +5,35 @@ import "fmt"
 type slice []int
 
 func MergeSort(s slice) slice {
-	return slice{}
+	if len(s) < 2 {
+		return s
+	}
+	m := len(s)/2 + len(s)%2 // math.Floor()
+
+	left := MergeSort(s[:m])
+	right := MergeSort(s[m:])
+	sorted := Merge(left, right)
+
+	return sorted
 }
 
-// merge creates a new sorted slice out of two sorted slices
-func merge(left, right slice) slice {
-	if len(left) < len(right) {
-		err := fmt.Errorf("Left slice is empty when the right slice is not")
-		fmt.Println(err.Error())
-	}
-
+// Merge creates a new sorted slice out of two sorted slices
+func Merge(left, right slice) slice {
 	sorted := slice{}
-	for i := 0; i < len(left); i++ {
-		if i > len(right)-1 {
-			sorted = append(sorted, left[i])
-			break
-		}
 
-		if left[i] < right[i] {
-			sorted = append(sorted, left[i], right[i])
+	for len(left) > 0 && len(right) > 0 {
+		if left[0] <= right[0] {
+			sorted = append(sorted, left[0])
+			left = left[1:]
 		} else {
-			sorted = append(sorted, right[i], left[i])
+			sorted = append(sorted, right[0])
+			right = right[1:]
 		}
 	}
+
+	sorted = append(sorted, left...)
+	sorted = append(sorted, right...)
+
 	return sorted
 }
 
