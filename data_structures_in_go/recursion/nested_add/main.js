@@ -13,6 +13,7 @@ function nestedAdd(array) {
 }
 
 function init() {
+	// to express nested arrays and focus on an algorithm, we will use JS over Go here
 	let array = [1, [4, 3], 12, 4, [1], [0, [0], 1]]
 	let sum = nestedAdd(array)
 	console.log("Sum of ", array, " is ", sum)
