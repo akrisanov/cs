@@ -6,19 +6,22 @@ from typing import List, Optional
 
 def binary_search(key: int, array: List[int]) -> Optional[int]:
     """Search for an id in an array. Return an index of the id if found."""
-    if len(array) == 0:
-        return None
+    start = 0
+    end = len(array) - 1
 
-    middle = math.floor(len(array) / 2)
+    while start <= end:
+        middle = math.floor((start + end) / 2)
 
-    if key == array[middle]:
-        return middle
+        if key < array[middle]:
+            end = middle - 1
 
-    if key < array[middle]:
-        return binary_search(key, array[:middle])
+        if key > array[middle]:
+            start = middle + 1
 
-    if key > array[middle]:
-        return binary_search(key, array[middle + 1 :])
+        if key == array[middle]:
+            return middle
+
+    return None
 
 
 if __name__ == "__main__":
