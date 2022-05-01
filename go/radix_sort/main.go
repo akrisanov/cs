@@ -18,29 +18,34 @@ func findMax(s []int) int {
 
 // countSort do counting sort according to the digit represented by exp
 func countSort(s []int, exp int) []int {
-	sorted := make([]int, len(s))
-	count := make([]int, 10) // for digits 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+	sliceSize := len(s)
 
-	// store count of occurrences
-	for i := 0; i < len(s); i++ {
-		count[(s[i]/exp)%10]++
+	sorted := make([]int, sliceSize)
+	digits_count := make([]int, 10) // for digits 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+
+	// store count of digit occurrences
+	for i := 0; i < sliceSize; i++ {
+		digit := (s[i] / exp) % 10
+		digits_count[digit]++
 	}
 
-	// change count[i] so that count[i] now contains actual position of this digit in sorted[]
+	// change digits_count[i] so that digits_count[i] now contains actual position of this digit in sorted[]
 	for i := 1; i < 10; i++ {
-		count[i] += count[i-1]
+		digits_count[i] += digits_count[i-1]
 	}
 
 	// build the output array
-	for i := len(s) - 1; i >= 0; i-- {
-		sorted[count[(s[i]/exp)%10]-1] = s[i]
-		count[(s[i]/exp)%10]--
+	for i := sliceSize - 1; i >= 0; i-- {
+		digit := (s[i] / exp) % 10
+		sorted[digits_count[digit]-1] = s[i]
+		digits_count[digit]--
 	}
 
 	return sorted
 }
 
-// RadixSort is non comparison sort.
+// RadixSort is a non comparison sort.
+// It also can be used for sorting strings (say 26 buckets for letterns), binary and hex numbers.
 // NOTE: this implementation doesn't support negative numbers.
 func RadixSort(s []int) []int {
 	if len(s) == 0 {
@@ -51,7 +56,7 @@ func RadixSort(s []int) []int {
 	max := findMax(s)
 
 	// do counting sort for every digit: instead of passing digit number, exp is passed.
-	// exp is 10^i, where i is current digit number
+	// exp is 10^exp, where i is current digit number
 	for exp := 1; math.Floor(float64(max)/float64(exp)) > 0; exp *= 10 {
 		s = countSort(s, exp)
 	}
